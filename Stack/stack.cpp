@@ -8,7 +8,7 @@
 using namespace std;
 
 #define size 10
-
+// asfa
 class Stack
 {
 private:
