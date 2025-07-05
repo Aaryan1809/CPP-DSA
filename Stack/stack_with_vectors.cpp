@@ -33,6 +33,7 @@ public:
                  << arr[top] << " is removed. \n";
                  cout << top << endl;
             arr.pop_back();
+            top--;
         }
     }
 

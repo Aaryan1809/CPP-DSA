@@ -52,7 +52,7 @@ public:
             cout << "\nStack is ";
             for (int a = 0; a <= top; a++)
             {
-                cout << array[a] << " ";
+                cout << array[top - a] << " ";
             }
         }
     }
@@ -114,6 +114,23 @@ public:
             cout << "\nValue = " << array[top - position + 1] << " at position " << position;
         }
     }
+
+    int rev_display()
+    {
+        if (top == -1)
+        {
+            cout << "\nStack is empty.";
+        }
+
+        else
+        {
+            cout << "\nStack is ";
+            for (int a = 0; a <= top; a++)
+            {
+                cout << array[a] << " ";
+            }
+        }
+    }
 };
 
 int main()
@@ -131,29 +148,30 @@ int main()
     a.push(900);
     a.push(1000);
 
-    a.peep(1);
-    a.peep(2);
-    a.peep(3);
-    a.peep(4);
-    a.peep(5);
-    a.peep(6);
-    a.peep(7);
-    a.peep(8);
-    a.peep(9);
-    a.peep(10);
+    // a.peep(1);
+    // a.peep(2);
+    // a.peep(3);
+    // a.peep(4);
+    // a.peep(5);
+    // a.peep(6);
+    // a.peep(7);
+    // a.peep(8);
+    // a.peep(9);
+    // a.peep(10);
 
     a.display();
+    a.rev_display();
 
-    a.pop();
-    a.pop();
-    a.pop();
-    a.display();
+    // a.pop();
+    // a.pop();
+    // a.pop();
+    // a.display();
 
-    a.peek();
+    // a.peek();
 
-    a.update(7, 69);
-    a.display();
+    // a.update(7, 69);
+    // a.display();
 
-    a.peek();
+    // a.peek();
     return 0;
 }
