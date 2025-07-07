@@ -107,7 +107,7 @@ int main()
     a.push(30);
     a.push(300);
     a.push(3097);
-    // a.push(30789);
+    a.push(30789);
     // a.push(30567);
     // a.push(334560);
     // a.push(3235640);

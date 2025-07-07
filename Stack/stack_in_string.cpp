@@ -10,13 +10,13 @@ public:
     Stack()
     {
         top = -1;
-    }
+    }   
 
     int push(char value)
     {
         top++;
-        name[top] = value;
-        cout << value << " is added";
+        name.push_back(value);
+        cout << value << " is added" << endl;
     }
 
     int display()
@@ -25,7 +25,7 @@ public:
         {
             cout << name[top - i] << endl;
         }
-        }
+    }
 };
 
 int main()
@@ -38,7 +38,9 @@ int main()
     a.push('y');
     a.push('a');
     a.push('n');
- 
+
+    cout << endl;
+    
     a.display();
     return 0;
 }
