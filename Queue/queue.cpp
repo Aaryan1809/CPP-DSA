@@ -6,9 +6,9 @@ using namespace std;
 class Queue
 {
     int queue[size];
-    int back, front;
 
 public:
+    int back, front;
     Queue()
     {
         front = -1;
@@ -32,24 +32,37 @@ public:
 
             back++;
             queue[back] = value;
-            cout << queue[back] << " added at : " << back << " position.\n";
+
+            // for us
+            // cout << queue[back] << " added at : " << back << " position.\n";
+
+            // for user
+            cout << queue[back] << " added at : " << back + 1 << " position.\n";
             return 1;
         }
     }
 
     int pop()
     {
-        if (front == -1)
+        if (front == -1 || front > back)
         {
-            cout << "Queue is empty nothing can be reomoved.";
+            cout << "Queue is empty nothing can be reomoved.\n";
         }
 
         else
         {
-            cout << queue[back] << " removed.\n";
-            back - front++;
-            cout << front << endl;
-            // cout << back << endl;
+            // for us
+            // cout << queue[front] << " removed from position : " << front  << "\n";
+
+            // for user
+            cout << queue[front] << " removed from position : " << front + 1 << "\n";
+            front++;
+
+            if (front > back)
+            {
+                front = -1;
+                back = -1;
+            }
         }
     }
 };
@@ -60,13 +73,20 @@ int main()
     a.push(10);
     a.push(20);
     a.push(30);
-    a.push(30);
-    a.push(30);
+    a.push(40);
+    a.push(50);
+    a.push(60);
 
     a.pop();
     a.pop();
+    a.pop();
+    a.pop();
+    a.pop();
+    a.pop();
 
-    a.push(30);
-    a.push(30);
+    cout << a.back << " " <<  a.front << endl;
+
+    a.push(90);
+    a.push(100);
     return 0;
 }
