@@ -44,7 +44,10 @@ public:
 
     int pop()
     {
-        if (front == -1 || front > back)
+        // we can use both if statement but the when we use second we need to put a if in the else and reset the values to -1 ,
+        // but in first we just need to put this if and nothing more and we will get correct ans.
+        // if (front > back)
+        if (front == -1)
         {
             cout << "Queue is empty nothing can be reomoved.\n";
         }
@@ -65,6 +68,75 @@ public:
             }
         }
     }
+
+    int peep(int pos)
+    {
+        if (front == -1)
+        {
+            cout << "\nQueue is Empty.";
+        }
+
+        // if (pos > back || pos < front)
+        else if (pos < front + 1 || pos > back + 1)
+        {
+            cout << "\nNo valid position exist.\n";
+        }
+
+        else
+        {
+            cout << pos << " = " << queue[pos - 1] << endl;
+        }
+    }
+
+    int update(int pos, int value)
+    {
+        if (front == -1)
+        {
+            cout << "\nQueue is Empty.";
+        }
+
+        else if (pos < front + 1 || pos > back + 1)
+        {
+            cout << "\nNo valid position exist.\n";
+        }
+
+        else
+        {
+            queue[pos - 1] = value;
+            cout << "\nValue updated " << value << " at " << pos;
+        }
+    }
+
+    void display()
+    {
+        if (front == -1)
+        {
+            cout << "\nQueue is Empty.";
+        }
+
+        else
+        {
+            for (int i = front; i <= back; i++)
+            {
+                cout << endl
+                     << queue[i] << " ";
+            }
+        }
+    }
+
+    void peek()
+    {
+        if (front == -1)
+        {
+            cout << "\nQueue is Empty.";
+        }   
+
+        else
+        {
+            cout << endl
+                 << queue[back];
+        }
+    }
 };
 
 int main()
@@ -75,18 +147,18 @@ int main()
     a.push(30);
     a.push(40);
     a.push(50);
-    a.push(60);
+    a.peek();
 
-    a.pop();
-    a.pop();
-    a.pop();
-    a.pop();
-    a.pop();
-    a.pop();
+    a.display();
 
-    cout << a.back << " " <<  a.front << endl;
+    // cout << a.front << endl
+    // << a.back << endl;
 
-    a.push(90);
-    a.push(100);
+    // a.peep(0);
+    // a.peep(1);
+
+    a.update(4, 10);
+    a.display();
+
     return 0;
 }
