@@ -35,29 +35,30 @@ public:
             cout << back << endl;
             cout << q[front] << endl;
             cout << q[back] << endl;
-
         }
     }
 
     int pop()
     {
-        // we can use both if statement but the when we use second we need to put a if in the else and reset the values to -1 ,
-        // but in first we just need to put this if and nothing more and we will get correct ans.
-        // if (front > back)
-        if (front == back)
+        if (front == -1)
         {
             cout << "Queue is empty nothing can be removed.\n";
         }
 
         else
         {
-            // for us
-            cout << endl << q[front] << " removed from position : " << front << "\n";
-            front = (front + 1) % size;
+            cout << endl
+                 << q[front] << " removed from position : " << front + 1 << "\n";
 
-            // for user
-            // cout << q[front] << " removed from position : " << front + 1 << "\n";
-            // front++;
+            if (front == back)
+            {
+                front = back = -1;
+            }
+
+            else
+            {
+                front = (front + 1) % size;
+            }
         }
     }
 };
@@ -76,6 +77,7 @@ int main()
     a.pop();
 
     a.push(60);
+    a.push(70);
     a.push(70);
     return 0;
 }
