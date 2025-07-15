@@ -27,29 +27,28 @@ public:
             {
                 front = 0;
             }
-            cout << endl;
 
             back = (back + 1) % size;
             q[back] = val;
-            cout << front << endl;
-            cout << back << endl;
-            cout << q[front] << endl;
-            cout << q[back] << endl;
+            // cout << front << endl;
+            // cout << back << endl;
+            // cout << q[front] << endl;
+            // cout << q[back] << endl;
         }
     }
 
     int pop()
     {
+        int ele;
         if (front == -1)
         {
             cout << "Queue is empty nothing can be removed.\n";
+            return 0;
         }
 
         else
         {
-            cout << endl
-                 << q[front] << " removed from position : " << front + 1 << "\n";
-
+            ele = q[front];
             if (front == back)
             {
                 front = back = -1;
@@ -60,24 +59,48 @@ public:
                 front = (front + 1) % size;
             }
         }
+        return ele;
+    }
+
+    void display()
+    {
+        for (int i = 0; i < size; i++)
+        {
+            cout << q[i] << " ";
+        }
+        cout << endl;
+        
     }
 };
 
 int main()
 {
     Circular_queue a;
-    a.push(10);
-    a.push(20);
+    a.push(10); // f= 0 , r = 0
+    a.push(20); // f= 0 , r = 1
     a.push(30);
     a.push(40);
     a.push(50);
-
-    a.pop();
-    a.pop();
-    a.pop();
-
+    a.display();
+    
+    cout << a.pop() << endl;
+    cout << a.pop() << endl;
+    cout << a.pop() << endl;
+    cout << a.pop() << endl;
+    cout << a.pop() << endl;
+    
     a.push(60);
     a.push(70);
-    a.push(70);
+    a.push(80);
+    a.display();
+    
+    cout << a.pop() << endl;
+    cout << a.pop() << endl;
+    cout << a.pop() << endl;
+
+    a.push(90);
+    a.push(100);
+
+    a.display();
     return 0;
 }
