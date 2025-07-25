@@ -13,7 +13,7 @@ int bs_rec(vector<int> arr, int tg, int st, int end)
         }
 
         else if (tg < arr[mid])
-        {
+        {  
             return bs_rec(arr, tg, st, mid - 1);
         }
 
@@ -29,7 +29,7 @@ int bs_rec(vector<int> arr, int tg, int st, int end)
 int main()
 {
     vector<int> array = {1, 2, 3, 4, 5, 6, 6, 7, 89, 90, 100};
-    int tg = 2;
+    int tg = 90;
 
     cout << bs_rec(array, tg, 0, array.size() - 1);
     return 0;
