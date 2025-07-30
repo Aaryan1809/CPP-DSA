@@ -62,47 +62,35 @@ int auto_bs(vector<int> arr, int tg)
 
     while (start <= end)
     {
-
-        if (arr[start] < arr[end])
+        int mid = (start + end) / 2;
+        bool asc = arr[start] < arr[end];
+        if (tg == arr[mid])
         {
-            int mid = (end + start) / 2;
+            return mid;
+        }
+
+        if (asc)
+        {
             if (tg < arr[mid])
             {
                 end = mid - 1;
             }
-
-            else if (tg > arr[mid])
+            else
             {
                 start = mid + 1;
             }
-
-            else
-            {
-                return mid;
-            }
         }
 
-        else if (arr[start] > arr[end])
-        {
-            int mid = (end + start) / 2;
-            if (tg < arr[mid])
-            {
-                start = mid + 1;
-            }
-
-            else if (tg > arr[mid])
-            {
-                end = mid - 1;
-            }
-
-            else
-            {
-                return mid;
-            }
-        }
         else
         {
-            return -1;
+            if (tg < arr[mid])
+            {
+                start = mid + 1;
+            }
+            else
+            {
+                end = mid - 1;
+            }
         }
     }
 }
@@ -115,9 +103,10 @@ int main()
     // descending order array
     vector<int> array2 = {9, 8, 7, 6, 5, 5, 4, 3, 2, 1};
 
-    int target = 20;
-    cout << bs(array, target);
-    cout << bs_desc(array2, target);
+    int target = 2;
+    // cout << bs(array, target);
+    // cout << bs_desc(array2, target);
     cout << auto_bs(array, target);
+    // cout << auto_bs(array2, target);
     return 0;
 }
