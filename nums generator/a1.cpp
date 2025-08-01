@@ -4,7 +4,7 @@ int main()
 {
     ofstream abc("nums.txt");
     abc << "{ ";
-    for (int a = 0; a <= 1000000; a = a + 7)
+    for (int a = 0; a <= 10000; a = a + 12)
     {
         abc << a << " , ";
     }
