@@ -22,12 +22,11 @@ public:
     }
 
     // push function to add value in the stack
-    int push(int val)
+    void push(int val)
     {
         if (top >= size - 1)
         {
             cout << "Stack is full new value cannot be added.";
-            return 0;
         }
 
         else
@@ -35,7 +34,6 @@ public:
             top++;
             array[top] = val;
             cout << val << " is added to stack at position " << top + 1 << endl;
-            ;
         }
     }
 
@@ -63,13 +61,16 @@ public:
         if (top <= -1)
         {
             cout << "\nStack is empty.";
+            return -1;
         }
 
         else
         {
+            int reply = array[top];
             cout << "\n"
                  << array[top] << " is removed from stack.";
             top--;
+            return reply;
         }
     }
 
@@ -136,42 +137,38 @@ public:
 int main()
 {
     Stack a;
+    int ch, val, ans;
+    while (1)
+    { // menu
+        cout << "\n1.for Push.";
+        cout << "\n2.for Pop.";
+        cout << "\n3.for Peep.";
+        cout << "\n4.for Change.";
+        cout << "\n5.for exit.";
 
-    a.push(100);
-    a.push(200);
-    a.push(300);
-    a.push(400);
-    a.push(500);
-    a.push(600);
-    a.push(700);
-    a.push(800);
-    a.push(900);
-    a.push(1000);
+        cout << "\nEnter choice : ";
+        cin >> ch;
 
-    // a.peep(1);
-    // a.peep(2);
-    // a.peep(3);
-    // a.peep(4);
-    // a.peep(5);
-    // a.peep(6);
-    // a.peep(7);
-    // a.peep(8);
-    // a.peep(9);
-    // a.peep(10);
+        switch (ch)
+        {
+        case 1:
+            cout << "\nEnter value";
+            cin >> val;
+            a.push(val);
+            break;
 
-    a.display();
-    a.rev_display();
+        case 2:
+            ans = a.pop();
+            if (ans != -1)
+                cout << ans << " is deleted.\n";
+            break;
 
-    // a.pop();
-    // a.pop();
-    // a.pop();
-    // a.display();
+        case 3:
+        
 
-    // a.peek();
-
-    // a.update(7, 69);
-    // a.display();
-
-    // a.peek();
+        default:
+            break;
+        }
+    }
     return 0;
 }
