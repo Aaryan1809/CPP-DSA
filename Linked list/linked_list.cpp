@@ -1,19 +1,18 @@
 #include <iostream>
 #include <stdlib.h>
 using namespace std;
-int Count = 0;
 // means our user defined data type
 // what this node can store so it can store 1 name and address to next node
 struct node
 {
     char name[50];
     node *next;
-} *head, *tail, *temp;
+} *head, *tail, *temp, *block;
 
 // this will create a node at the begining
 void addatBegin()
 {
-    struct node *block = (node *)malloc(sizeof(node));
+    block = (node *)malloc(sizeof(node));
     cout << "\nEnter the name : ";
     cin >> block->name;
 
@@ -34,7 +33,7 @@ void addatBegin()
 
 void addatLast()
 {
-    struct node *block = (node *)malloc(sizeof(node));
+    block = (node *)malloc(sizeof(node));
     cout << "\nEnter the name : ";
     cin >> block->name;
 
@@ -56,25 +55,35 @@ void addatLast()
 void delatLast()
 {
     temp = head;
-    while (temp != Count - 1)
+    if (head == '\0')
     {
-        temp = temp->next;
-    }
-
-    if (tail == '\0')
-    {
-        cout << "list is empty";
+        cout << "\nlist is empty";
     }
 
     else
     {
-        free(tail);
-        temp->next = '\0';
-        tail = temp;
+        while (temp->next != tail)
+        {
+            temp = temp->next;
+        }
+
+        if (head->next == '\0')
+        {
+            free(temp);
+            head = '\0';
+            tail = '\0';
+        }
+
+        else
+        {
+            temp->next = '\0';
+            free(tail);
+            tail = temp;
+        }
     }
 }
 
-void delatFisrt()
+void delatFirst()
 {
     if (head == '\0')
     {
@@ -93,53 +102,96 @@ void delatFisrt()
         else
         {
             head = head->next;
-            temp -> next = '\0';
+            temp->next = '\0';
             free(temp);
         }
     }
 }
 
-void count()
+int count()
 {
+    int Count = 0;
     temp = head;
-    while (temp->next != '\0')
+    while (temp != '\0')
     {
-        temp = temp->next;
         Count++;
+        temp = temp->next;
     }
-    cout << Count;
+    // cout << Count;
+    return Count;
 }
 
 void display()
 {
-    count();
     temp = head;
-    for (int i = 0; i <= Count; i++)
+    while (temp != '\0')
     {
-        cout << temp->name;
-        cout << " ";
+        cout << temp->name << " ";
         temp = temp->next;
-        //        cout << Count;
-        //        cout << " .hello";
     }
-    cout << "\n end ";
+    // for debugging
+    // cout << "\n end";
 }
 
+// there can be a bug that after adding 2 to 3 nodes at first or last by insert at position then the count will not be updated so if we try to enter a legit position then the node will be inserted at wrong position maybe...
+void addatPosition()
+{
+    int pos, Count = count();
+    cout << "\nEnter posistion to insert the element on : ";
+    cin >> pos;
+    if (pos > Count)
+    {
+        cout << "\nYou entered wrong position which is more than the count so we will add your node to last.";
+        addatLast();
+    }
+    else if (pos < 0)
+    {
+        cout << "\nYou entered wrong position which is less than the count so we will add your node at first.";
+        addatBegin();
+    }
+
+    else
+    {
+        // for creating a node block
+        block = (node *)malloc(sizeof(node));
+        cout << "\nEnter the name : ";
+        cin >> block->name;
+        // to get the temp variable to pos - 1 so we can add the node in required position
+        int C = 0;
+        temp = head;
+        while (C < pos)
+        {
+            temp = temp->next;
+        }
+        // allocating the links between the new node 
+        // new node na next ma aapde old node je enu next thase enu address nakhi didhu 
+        block->next = temp->next;
+        // have jya temp ubho che ene new node nu address api didhu
+        temp->next = block;
+    }
+}
+void delatPosition()
+{
+}
 int main()
 {
     int ch;
-    node test;
+
     while (1)
     {
-        cout << "\n1 for insert at first.";
-        cout << "\n5 for insert at last.";
-        cout << "\n7 for delete at first.";
-        cout << "\n8 for delete at last.";
-        cout << "\n3 for display.";
-        cout << "\n4 for count.";
-        cout << "\n6 for exit.";
+        cout << "\n===== Linked List Menu =====\n";
+        cout << "1. Insert at beginning\n";
+        cout << "2. Insert at last\n";
+        cout << "3. Insert at position\n";
+        cout << "4. Delete at beginning\n";
+        cout << "5. Delete at last\n";
+        cout << "6. Delete at position\n";
+        cout << "7. Count nodes\n";
+        cout << "8. Display list\n";
+        cout << "9. Exit\n";
+        cout << "============================\n";
 
-        cout << "\nEnter the choice : ";
+        cout << "Enter your choice: ";
         cin >> ch;
 
         switch (ch)
@@ -148,31 +200,34 @@ int main()
             addatBegin();
             break;
         case 2:
-            // atLast();
-            break;
-        case 3:
-            display();
-            break;
-        case 4:
-            count();
-            break;
-        case 5:
             addatLast();
             break;
-        case 6:
-            exit(0);
+        case 3:
+            addatPosition(); // you’ll implement this
             break;
-        case 7:
-            delatFirst() break;
-        case 8:
+        case 4:
+            delatFirst();
+            break;
+        case 5:
             delatLast();
             break;
+        case 6:
+            delatPosition(); // you’ll implement this
+            break;
+        case 7:
+            count();
+            break;
+        case 8:
+            display();
+            break;
+        case 9:
+            exit(0);
+            break;
         default:
-            cout << "\ninvalid option.";
+            cout << "\nInvalid option. Try again.\n";
             break;
         }
     }
-    cout << Count;
-    cout << "Over";
+
     return 0;
 }
