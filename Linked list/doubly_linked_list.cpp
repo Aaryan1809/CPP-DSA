@@ -1,3 +1,4 @@
+// code of single linked list will be converted into double (simple)
 #include <iostream>
 #include <stdlib.h>
 using namespace std;
@@ -6,8 +7,8 @@ using namespace std;
 struct node
 {
     char name[50];
-    node *next;
-} *head, *tail, *temp, *block;
+    node *next, *previous;
+} *head, *tail, *temp, *block, *temp2;
 
 // this will create a node at the begining
 void addatBegin()
@@ -17,6 +18,7 @@ void addatBegin()
     cin >> block->name;
 
     block->next = '\0';
+    block->previous = '\0';
 
     if (head == '\0')
     {
@@ -24,10 +26,13 @@ void addatBegin()
         tail = block;
     }
 
+    // done
     else
     {
+        head->previous = block;
         block->next = head;
         head = block;
+        head->previous = '\0';
     }
 }
 
@@ -38,6 +43,7 @@ void addatLast()
     cin >> block->name;
 
     block->next = '\0';
+    block->previous = '\0';
 
     if (head == '\0')
     {
@@ -48,7 +54,9 @@ void addatLast()
     else
     {
         tail->next = block;
+        block->previous = tail;
         tail = block;
+        tail->next = '\0';
     }
 }
 
@@ -60,51 +68,46 @@ void delatLast()
         cout << "\nlist is empty";
     }
 
+    if (head->next == '\0')
+    {
+        free(temp);
+        head = '\0';
+        tail = '\0';
+    }
+
     else
     {
         while (temp->next != tail)
         {
             temp = temp->next;
         }
-
-        if (head->next == '\0')
-        {
-            free(temp);
-            head = '\0';
-            tail = '\0';
-        }
-
-        else
-        {
-            temp->next = '\0';
-            free(tail);
-            tail = temp;
-        }
+        temp->next = '\0';
+        tail->previous = '\0';
+        free(tail);
+        tail = temp;
     }
 }
 
 void delatFirst()
 {
+    temp = head;
     if (head == '\0')
     {
         cout << "\nlist is empty";
     }
 
+    else if (head->next == '\0')
+    {
+        free(temp);
+        head = '\0';
+        tail = '\0';
+    }
     else
     {
-        temp = head;
-        if (head->next == '\0')
-        {
-            free(temp);
-            head = '\0';
-            tail = '\0';
-        }
-        else
-        {
-            head = head->next;
-            temp->next = '\0';
-            free(temp);
-        }
+        head = head->next;
+        temp->next = '\0';
+        head->previous = '\0';
+        free(temp);
     }
 }
 
@@ -123,14 +126,36 @@ int count()
 
 void display()
 {
-    temp = head;
-    while (temp != '\0')
-    {
-        cout << temp->name << " ";
-        temp = temp->next;
-    }
-    // for debugging
-    // cout << "\n end";
+    // int dispCh;
+    // cout << "\n1. Ascending";
+    // cout << "\n2. Descending";
+    // cout << "\nEnter in what order do you want to show the linked list : ";
+    // cin >> dispCh;
+
+    // if (dispCh == 1)
+    // {
+        temp = head;
+        while (temp != nullptr)
+        {
+            cout << temp->name << " ";
+            temp = temp->next;
+        }
+    // }
+    // else if (dispCh == 2)
+    // {
+    cout << "\n";
+        temp = tail;
+        while (temp != nullptr)
+        {
+            cout << temp->name << " ";
+            temp = temp->previous;
+        }
+    // }
+
+    // else
+    // {
+    //     cout << "\nInvalid choice";
+    // }
 }
 
 // there can be a bug that after adding 2 to 3 nodes at first or last by insert at position then the count will not be updated so if we try to enter a legit position then the node will be inserted at wrong position maybe...
@@ -139,14 +164,14 @@ void addatPosition()
     int pos, Count = count();
     cout << "\nEnter posistion to insert the element on : ";
     cin >> pos;
-    if (pos > Count)
+    if (pos == Count)
     {
-        cout << "\nYou entered wrong position which is more than the count so we will add your node to last.";
+        // cout << "\nYou entered wrong position which is more than the count so we will add your node to last.";
         addatLast();
     }
-    else if (pos < 0)
+    else if (pos == 1)
     {
-        cout << "\nYou entered wrong position which is less than the count so we will add your node at first.";
+        // cout << "\nYou entered wrong position which is less than the count so we will add your node at first.";
         addatBegin();
     }
 
@@ -157,29 +182,69 @@ void addatPosition()
         cout << "\nEnter the name : ";
         cin >> block->name;
         // to get the temp variable to pos - 1 so we can add the node in required position
-        int C = 0;
+        int C = 1;
         temp = head;
-        while (C < pos)
+        while (C < pos - 1)
         {
             temp = temp->next;
+            C++;
         }
-        // allocating the links between the new node 
-        // new node na next ma aapde old node je enu next thase enu address nakhi didhu 
-        block->next = temp->next;
+        temp2 = temp->next;
+        // allocating the links between the new node
+        // new node na next ma aapde old node je enu next thase enu address nakhi didhu
+        block->next = temp->next; // ✅
+        block->previous = temp;
         // have jya temp ubho che ene new node nu address api didhu
         temp->next = block;
+        temp2->previous = block;
     }
 }
+
 void delatPosition()
 {
+    int pos, Count = count();
+    cout << "\nEnter posistion to delete the element from : ";
+    cin >> pos;
+    if (pos > Count)
+    {
+        // cout << "\nYou entered wrong position which is more than the count so we will add your node to last.";
+        delatLast();
+    }
+    else if (pos == 1)
+    {
+        // cout << "\nYou entered wrong position which is less than the count so we will add your node at first.";
+        delatFirst();
+    }
+
+    else if (pos <= 0 || pos > Count)
+    {
+        cout << "\nInvalid position.";
+    }
+
+    else
+    {
+        int C = 1;
+        temp = head;
+        while (C < pos - 1)
+        {
+            temp = temp->next;
+            C++;
+        }
+        temp2 = temp->next;
+
+        temp->next = temp2->next;
+        temp2->next->previous = temp;
+        free(temp2);
+    }
 }
+
 int main()
 {
     int ch;
-
+    // menu
     while (1)
     {
-        cout << "\n===== Linked List Menu =====\n";
+        cout << "\n===== Doubly Linked List Menu =====\n";
         cout << "1. Insert at beginning\n";
         cout << "2. Insert at last\n";
         cout << "3. Insert at position\n";
@@ -215,7 +280,7 @@ int main()
             delatPosition(); // you’ll implement this
             break;
         case 7:
-            count();
+            cout << "\nTotal number of nodes are : " << count();
             break;
         case 8:
             display();
