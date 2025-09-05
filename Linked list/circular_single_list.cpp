@@ -1,3 +1,4 @@
+// green and blue lines will show the new lines of code for circular linked list
 #include <iostream>
 #include <stdlib.h>
 using namespace std;
@@ -10,6 +11,7 @@ struct node
 } *head, *tail, *temp, *block, *temp2;
 
 // this will create a node at the begining
+// done
 void addatBegin()
 {
     block = (node *)malloc(sizeof(node));
@@ -22,15 +24,17 @@ void addatBegin()
     {
         head = block;
         tail = block;
+        head->next = head;
     }
 
     else
     {
         block->next = head;
         head = block;
+        tail->next = head;
     }
 }
-
+// done
 void addatLast()
 {
     block = (node *)malloc(sizeof(node));
@@ -43,43 +47,47 @@ void addatLast()
     {
         head = block;
         tail = block;
+        head->next = head;
     }
 
     else
     {
+        block->next = head;
         tail->next = block;
         tail = block;
     }
 }
 
+// done
 void delatLast()
 {
-    temp = head;
     if (head == '\0')
     {
         cout << "\nlist is empty";
     }
 
-    if (head->next == '\0')
+    else if (head->next == head)
     {
-        free(temp);
+        free(head);
         head = '\0';
         tail = '\0';
     }
 
     else
     {
+        temp = head;
         while (temp->next != tail)
         {
             temp = temp->next;
         }
 
-        temp->next = '\0';
+        temp->next = head;
         free(tail);
         tail = temp;
     }
 }
 
+// done
 void delatFirst()
 {
     if (head == '\0')
@@ -87,29 +95,30 @@ void delatFirst()
         cout << "\nlist is empty";
     }
 
+    else if (head->next == head)
+    {
+        free(head);
+        head = '\0';
+        tail = '\0';
+    }
+
     else
     {
         temp = head;
-        if (head->next == '\0')
-        {
-            free(temp);
-            head = '\0';
-            tail = '\0';
-        }
-        else
-        {
-            head = head->next;
-            temp->next = '\0';
-            free(temp);
-        }
+        head = head->next;
+        free(temp);
+        tail->next = head;
     }
 }
 
+// done
 int count()
 {
-    int Count = 0;
+    if (head == NULL)
+        return 0;
+    int Count = 1;
     temp = head;
-    while (temp != '\0')
+    while (temp->next != head)
     {
         Count++;
         temp = temp->next;
@@ -118,14 +127,25 @@ int count()
     return Count;
 }
 
+// done
 void display()
 {
     temp = head;
-    while (temp != '\0')
+    if (head == '\0')
+    {
+        cout << "\nlist is empty.";
+        return;
+    }
+
+    do
     {
         cout << temp->name << " ";
         temp = temp->next;
-    }
+    } while (temp != head);
+
+    cout << "\n tail -> next = " << tail->next->name;
+    cout << "\n tail -> name = " << tail->name;
+    cout << "\n head -> next = " << head->next->name;
     // for debugging
     // cout << "\n end";
 }
@@ -136,15 +156,20 @@ void addatPosition()
     int pos, Count = count();
     cout << "\nEnter posistion to insert the element on : ";
     cin >> pos;
-    if (pos == Count || pos == Count + 1)
+    if (pos > Count)
     {
         // cout << "\nYou entered wrong position which is more than the count so we will add your node to last.";
         addatLast();
     }
-    else if (pos == 1)
+    else if (pos <= 1)
     {
         // cout << "\nYou entered wrong position which is less than the count so we will add your node at first.";
         addatBegin();
+    }
+
+    else if (pos <= 0 || pos > Count)
+    {
+        cout << "\nInvalid position.";
     }
 
     else
@@ -153,6 +178,7 @@ void addatPosition()
         block = (node *)malloc(sizeof(node));
         cout << "\nEnter the name : ";
         cin >> block->name;
+
         // to get the temp variable to pos - 1 so we can add the node in required position
         int C = 1;
         temp = head;
@@ -174,7 +200,12 @@ void delatPosition()
     int pos, Count = count();
     cout << "\nEnter posistion to delete the element from : ";
     cin >> pos;
-    if (pos > Count)
+    if (head == '\0')
+    {
+        cout << "\nList is empty.";
+    }
+
+    else if (pos >= Count)
     {
         // cout << "\nYou entered wrong position which is more than the count so we will add your node to last.";
         delatLast();

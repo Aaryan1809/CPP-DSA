@@ -107,7 +107,7 @@ void delatFirst()
 
 int count()
 {
-    int Count = 0;
+    int Count = 1;
     temp = head;
     while (temp != '\0')
     {
