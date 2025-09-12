@@ -192,7 +192,7 @@ void addatPosition()
         temp2 = temp->next;
         // allocating the links between the new node
         // new node na next ma aapde old node je enu next thase enu address nakhi didhu
-        block->next = temp->next; // ✅
+        block->next = temp2; // ✅
         block->previous = temp;
         // have jya temp ubho che ene new node nu address api didhu
         temp->next = block;

@@ -1,214 +1,248 @@
-// display , at pos del and add and count baki che 
-
-#include <iostream>
-#include <stdlib.h>
+#include <bits/stdc++.h>
 using namespace std;
-// means our user defined data type
-// what this node can store so it can store 1 name and address to next node
-struct node
+
+class circularDoubleLL
 {
+private:
     char name[50];
-    node *next, *previous;
-} *head, *tail, *temp, *block, *temp2;
+    circularDoubleLL *next, *previous;
 
-int count()
+public:
+    circularDoubleLL()
+    {
+        next = NULL;
+        previous = NULL;
+    }
+
+    void addatBegin();
+    void addatLast();
+    void delatLast();
+    void delatFirst();
+    int count();
+    void display();
+    void addatPosition();
+    void delatPosition();
+} *temp, *head, *tail, *temp2, *node, obj;
+
+void circularDoubleLL ::addatBegin()
 {
-    int c = 0;
-    temp = head;
+    node = new circularDoubleLL;
+    cout << "\nEnter the name : ";
+    cin >> node->name;
 
-    // for only 1 element
-    if (head->next == head)
+    if (head == NULL)
     {
-        c = c + 1;
-        return c;
+        head = node;
+        tail = node;
+        head->next = head;
+        head->previous = head;
     }
 
-    // for 0 element
-    else if (head == NULL)
-    {
-        return 0;
-    }
-
-    // for normal case
     else
     {
-        do
+        node->next = head;
+        node->previous = tail;
+        head->previous = node;
+        tail->next = node;
+        head = node;
+    }
+}
+void circularDoubleLL ::addatLast()
+{
+    node = new circularDoubleLL;
+    cout << "\nEnter the name : ";
+    cin >> node->name;
+
+    if (head == NULL)
+    {
+        head = node;
+        head->next = head;
+        head->previous = head;
+        tail = head;
+    }
+
+    else
+    {
+        node->next = head;
+        node->previous = tail;
+        head->previous = node;
+        tail->next = node;
+        tail = node;
+    }
+}
+void circularDoubleLL ::delatLast()
+{
+    if (head == NULL)
+    {
+        cout << "\nlinked List is empty.";
+    }
+
+    else
+    {
+        if (head == tail)
         {
-            c++;
-            temp = temp->next;
-        } while (temp->next = head);
-        return c;
+            delete (head);
+            head = NULL;
+            tail = NULL;
+        }
+
+        else
+        {
+            temp = tail->previous;
+            head->previous = temp;
+            temp->next = tail->next;
+            tail->next = NULL;
+            tail->previous = NULL;
+            delete (tail);
+            tail = temp;
+        }
     }
 }
-
-void addatBegin()
+void circularDoubleLL ::delatFirst()
 {
-    block = (node *)malloc(sizeof(node));
-    cout << "\nEnter the name : ";
-    cin >> block->name;
-
-    block->next = NULL;
-    block->previous = NULL;
-
     if (head == NULL)
     {
-        head = block;
-        tail = block;
-        head->next = head;
+        cout << "\nlinked List is empty.";
     }
 
     else
     {
-        block->next = head;
-        head->previous = block;
-        tail->next = block;
-        head = block;
+        if (head == tail)
+        {
+            delete (head);
+            head = NULL;
+            tail = NULL;
+        }
+
+        else
+        {
+            temp = head->next;
+            temp->previous = tail;
+            tail->next = temp;
+            head->previous = NULL;
+            head->next = NULL;
+            delete (head);
+            head = temp;
+        }
     }
 }
-
-void addatLast()
+int circularDoubleLL ::count()
 {
-    block = (node *)malloc(sizeof(node));
-    cout << "\nEnter the name : ";
-    cin >> block->name;
-
-    block->next = NULL;
-    block->previous = NULL;
-
+    int c = 1;
     if (head == NULL)
-    {
-        head = block;
-        tail = block;
-        head->next = head;
-    }
-
-    else
-    {
-        tail->next = block;
-        block->previous = tail;
-        block->next = head;
-        tail = block;
-    }
-}
-
-void addatPosition()
-{
-    int pos, Count = count();
-    cout << "\nEnter posistion to insert the element on : ";
-    cin >> pos;
-    if (pos == Count)
-    {
-        // cout << "\nYou entered wrong position which is more than the count so we will add your node to last.";
-        addatLast();
-    }
-    else if (pos == 1)
-    {
-        // cout << "\nYou entered wrong position which is less than the count so we will add your node at first.";
-        addatBegin();
-    }
-
-    else if (pos <= 0 || pos > Count)
-    {
-        cout << "\nInvalid position.";
-    }
-
-    else
-    {
-        // for creating a node block
-        block = (node *)malloc(sizeof(node));
-        cout << "\nEnter the name : ";
-        cin >> block->name;
-    }
-}
-
-void delatFirst()
-{
-    if (head == NULL)
-    {
-        cout << "\nList is empty.";
-    }
-
-    else if (head->next == head)
-    {
-        head->next = NULL;
-        free(head);
-    }
-
+        return 0;
+    else if (head == head->next)
+        return 1;
     else
     {
         temp = head;
-        head->next->previous = tail;
-        head->next = NULL;
-        head->previous = NULL;
-        head = head->next;
-        tail->next = head;
-        free(temp);
+        while (temp->next != head)
+        {
+            c = c + 1;
+            temp = temp->next;
+        }
+        // c = c + 1;
+        return c;
     }
 }
-
-void delatLast()
+void circularDoubleLL ::display()
+{
+    if (head == NULL)
+        cout << "\nList is empty.";
+    else
+    {
+        temp = head;
+        while (temp->next != head)
+        {
+            cout << temp->name << " ";
+            temp = temp->next;
+        }
+        cout << temp->name;
+    }
+}
+void circularDoubleLL ::addatPosition()
 {
     if (head == NULL)
     {
-        cout << "\nList is empty.";
+        cout << "\nlinked List is empty.";
     }
-
-    else if (head->next == head)
+    else
     {
-        head->next = NULL;
-        free(head);
+        int pos;
+        cout << "\nEnter the postition : ";
+        cin >> pos;
+
+        if (pos == 1)
+            addatBegin();
+
+        else if (pos == count() + 1)
+            addatLast();
+
+        else if (pos < 1 || pos > count())
+            cout << "\nInvalid Position";
+
+        else
+        {
+            node = new circularDoubleLL;
+            cout << "\nEnter the name : ";
+            cin >> node->name;
+
+            int c = 1;
+            temp = head;
+            while (c != pos - 1)
+            {
+                temp = temp->next;
+                c++;
+            }
+            temp2 = temp->next;
+
+            node->next = temp2;
+            node->previous = temp;
+            temp->next = node;
+            temp2->previous = node;
+        }
+    }
+}
+void circularDoubleLL ::delatPosition()
+{
+    if (head == NULL)
+    {
+        cout << "\nlinked List is empty.";
     }
 
     else
     {
-        temp = tail->previous;
-        temp->next = head;
-        head->previous = temp;
-        tail->next = NULL;
-        tail->previous = NULL;
-        free(tail);
-        tail = temp;
+        int pos;
+        cout << "\nEnter the postition : ";
+        cin >> pos;
+
+        if (pos == 1)
+            delatFirst();
+
+        else if (pos == count())
+            delatLast();
+
+        else if (pos < 1 || pos > count())
+            cout << "\nInvalid Position";
+
+        else
+        {
+            int c = 1;
+            temp = head;
+            while (c != pos - 1)
+            {
+                temp = temp->next;
+                c++;
+            }
+            temp2 = temp->next;
+
+            temp->next = temp2->next;
+            temp2->next->previous = temp;
+            temp2->next = NULL;
+            temp2->previous = NULL;
+            delete (temp2);
+        }
     }
-}
-
-// there can be a bug that after adding 2 to 3 nodes at first or last by insert at position then the count
-// will not be updated so if we try to enter a legit position then the node will be inserted at wrong position maybe...
-
-void delatPosition()
-{
-    int pos, Count = count();
-    cout << "\nEnter posistion to delete the element from : ";
-    cin >> pos;
-    if (pos > Count)
-    {
-        // cout << "\nYou entered wrong position which is more than the count so we will add your node to last.";
-        delatLast();
-    }
-    else if (pos == 1)
-    {
-        // cout << "\nYou entered wrong position which is less than the count so we will add your node at first.";
-        delatFirst();
-    }
-
-    else if (pos <= 0 || pos > Count)
-    {
-        cout << "\nInvalid position.";
-    }
-
-    else
-    {
-    }
-}
-
-void display()
-{
-    // for 0 element
-    if (head == NULL)
-    {
-        cout << "\nList is empty.";
-    }
-
-
 }
 
 int main()
@@ -235,28 +269,28 @@ int main()
         switch (ch)
         {
         case 1:
-            addatBegin();
+            obj.addatBegin();
             break;
         case 2:
-            addatLast();
+            obj.addatLast();
             break;
         case 3:
-            addatPosition(); // you’ll implement this
+            obj.addatPosition(); // youâ€™ll implement this
             break;
         case 4:
-            delatFirst();
+            obj.delatFirst();
             break;
         case 5:
-            delatLast();
+            obj.delatLast();
             break;
         case 6:
-            delatPosition(); // you’ll implement this
+            obj.delatPosition(); // youâ€™ll implement this
             break;
         case 7:
-            cout << "\nTotal number of nodes are : " << count();
+            cout << "\nTotal number of nodes are : " << obj.count();
             break;
         case 8:
-            display();
+            obj.display();
             break;
         case 9:
             exit(0);
