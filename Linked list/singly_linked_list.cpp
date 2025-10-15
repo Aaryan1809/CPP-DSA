@@ -1,4 +1,4 @@
-#include <iostream>
+/*#include <iostream>
 #include <stdlib.h>
 using namespace std;
 // means our user defined data type
@@ -104,6 +104,11 @@ void delatFirst()
         }
     }
 }
+
+i will ace in my tomorrow's test.
+this will be the easiest test of my whole life becuase i have gone through much more than this.
+i have not come this far to fuckk all the things up.
+a person who had faced stroms will not be feared by rainy days.
 
 int count()
 {
@@ -261,5 +266,295 @@ int main()
         }
     }
 
+    return 0;
+}
+*/
+
+#include <iostream>
+using namespace std;
+
+class linkList
+{
+private:
+    int data;
+    linkList *next;
+
+public:
+    linkList()
+    {
+        next = NULL;
+    }
+
+    void Sorting();
+    void addatBegin();
+    void addatLast();
+    void delatLast();
+    void delatFirst();
+    int count();
+    void display();
+    void addatPosition();
+    void delatPosition();
+} *head, *tail, *temp, *node, *temp2;
+
+void linkList::Sorting()
+{
+    temp = head;
+    while (temp != NULL)
+    {
+        temp2 = temp->next;
+        if (temp->data > temp2->data)
+        {
+            swap(temp->data, temp2->data);
+        }
+        temp = temp->next;
+    }
+}
+
+void linkList::addatBegin()
+{
+    node = new linkList;
+    cout << "\nEnter characters : ";
+    cin >> node->data;
+
+    if (head == NULL)
+    {
+        head = node;
+        tail = node;
+        head->next = NULL;
+    }
+    else
+    {
+        node->next = head;
+        head = node;
+    }
+}
+
+void linkList::addatLast()
+{
+    node = new linkList;
+    cout << "\nEnter characters : ";
+    cin >> node->data;
+
+    if (head == NULL)
+    {
+        head = node;
+        tail = node;
+    }
+    else
+    {
+        tail->next = node;
+        tail = node;
+    }
+}
+
+int linkList::count()
+{
+    if (head == NULL)
+        return 0;
+
+    int c = 1;
+    temp = head;
+    while (temp->next != head)
+    {
+        c++;
+        temp = temp->next;
+    }
+    return c;
+}
+
+void linkList::addatPosition()
+{
+    int pos, Count = count();
+    cout << "\nEnter Position to insert on : ";
+    cin >> pos;
+
+    if (pos == 1)
+    {
+        addatBegin();
+    }
+    else if (pos == Count + 1)
+    {
+        addatLast();
+    }
+    else if (pos <= 0 || pos > Count + 1)
+    {
+        cout << "\nInvalid position";
+    }
+    else
+    {
+        node = new linkList;
+        cout << "\nEnter characters : ";
+        cin >> node->data;
+
+        int c = 1;
+        temp = head;
+        while (c < pos - 1)
+        {
+            temp = temp->next;
+            c++;
+        }
+
+        node->next = temp->next;
+        temp->next = node;
+    }
+}
+
+void linkList::delatPosition()
+{
+    int pos, Count = count();
+    cout << "\nEnter position to delete from : ";
+    cin >> pos;
+
+    if (head == NULL)
+    {
+        cout << "\nList is empty.";
+    }
+    else if (pos == 1)
+    {
+        delatFirst();
+    }
+    else if (pos >= Count)
+    {
+        delatLast();
+    }
+    else if (pos <= 0 || pos > Count)
+    {
+        cout << "\nInvalid position.";
+    }
+    else
+    {
+        int C = 1;
+        temp = head;
+        while (C < pos - 1)
+        {
+            temp = temp->next;
+            C++;
+        }
+        temp2 = temp->next;
+        temp->next = temp2->next;
+        delete temp2;
+    }
+}
+
+void linkList::delatLast()
+{
+    if (head == NULL)
+    {
+        cout << "\nList is empty";
+    }
+    else if (head->next == NULL)
+    {
+        delete head;
+        head = NULL;
+        tail = NULL;
+    }
+    else
+    {
+        temp = head;
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+
+        temp->next = head;
+        delete tail;
+        tail = temp;
+    }
+}
+
+void linkList::delatFirst()
+{
+    if (head == NULL)
+    {
+        cout << "\nList is empty";
+    }
+    else if (head->next == NULL)
+    {
+        delete head;
+        head = NULL;
+        tail = NULL;
+    }
+    else
+    {
+        temp = head;
+        head = head->next;
+        tail->next = head;
+        delete temp;
+    }
+}
+
+void linkList::display()
+{
+    if (head == NULL)
+    {
+        cout << "\nList is empty.";
+        return;
+    }
+
+    temp = head;
+    do
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    } while (temp != head);
+
+    cout << "\n tail -> next = " << tail->next->data;
+    cout << "\n tail -> data = " << tail->data;
+    cout << "\n head -> next = " << head->next->data;
+}
+
+int main()
+{
+    int ch;
+    linkList obj; // only to call methods, actual nodes are managed via head/tail
+    while (1)
+    {
+        cout << "\n===== Circular Singly Linked List Menu =====\n";
+        cout << "1. Insert at beginning\n";
+        cout << "2. Insert at last\n";
+        cout << "3. Insert at position\n";
+        cout << "4. Delete at beginning\n";
+        cout << "5. Delete at last\n";
+        cout << "6. Delete at position\n";
+        cout << "7. Count nodes\n";
+        cout << "8. Display list\n";
+        cout << "9. Exit\n";
+        cout << "============================\n";
+
+        cout << "Enter your choice: ";
+        cin >> ch;
+
+        switch (ch)
+        {
+        case 1:
+            obj.addatBegin();
+            break;
+        case 2:
+            obj.addatLast();
+            break;
+        case 3:
+            obj.addatPosition();
+            break;
+        case 4:
+            obj.delatFirst();
+            break;
+        case 5:
+            obj.delatLast();
+            break;
+        case 6:
+            obj.delatPosition();
+            break;
+        case 7:
+            cout << "\nTotal number of nodes: " << obj.count();
+            break;
+        case 8:
+            obj.display();
+            break;
+        case 9:
+            exit(0);
+        default:
+            cout << "\nInvalid option. Try again.\n";
+        }
+    }
     return 0;
 }

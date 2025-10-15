@@ -54,7 +54,7 @@ public:
     int peep(int pos)
     {
         int x = arr.size();
-        if (pos <= 0 || pos > x)
+        if (top - pos + 1 < 0)
         {
             cout << "\nNo element present at " << pos << " in stack to Show.\n";
         }

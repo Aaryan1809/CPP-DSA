@@ -134,22 +134,22 @@ void display()
 
     // if (dispCh == 1)
     // {
-        temp = head;
-        while (temp != nullptr)
-        {
-            cout << temp->name << " ";
-            temp = temp->next;
-        }
+    temp = head;
+    while (temp != nullptr)
+    {
+        cout << temp->name << " ";
+        temp = temp->next;
+    }
     // }
     // else if (dispCh == 2)
     // {
     cout << "\n";
-        temp = tail;
-        while (temp != nullptr)
-        {
-            cout << temp->name << " ";
-            temp = temp->previous;
-        }
+    temp = tail;
+    while (temp != nullptr)
+    {
+        cout << temp->name << " ";
+        temp = temp->previous;
+    }
     // }
 
     // else
@@ -164,11 +164,18 @@ void addatPosition()
     int pos, Count = count();
     cout << "\nEnter posistion to insert the element on : ";
     cin >> pos;
-    if (pos == Count)
+    if (pos < 1 || pos > Count + 1)
+    {
+        cout << "\nInvalid position.\n";
+        return;
+    }
+
+    else if (pos == Count + 1)
     {
         // cout << "\nYou entered wrong position which is more than the count so we will add your node to last.";
         addatLast();
     }
+    
     else if (pos == 1)
     {
         // cout << "\nYou entered wrong position which is less than the count so we will add your node at first.";
@@ -181,8 +188,10 @@ void addatPosition()
         block = (node *)malloc(sizeof(node));
         cout << "\nEnter the name : ";
         cin >> block->name;
+
         // to get the temp variable to pos - 1 so we can add the node in required position
         int C = 1;
+
         temp = head;
         while (C < pos - 1)
         {

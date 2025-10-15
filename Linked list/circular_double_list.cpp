@@ -13,7 +13,6 @@ public:
         next = NULL;
         previous = NULL;
     }
-
     void addatBegin();
     void addatLast();
     void delatLast();
@@ -24,7 +23,7 @@ public:
     void delatPosition();
 } *temp, *head, *tail, *temp2, *node, obj;
 
-void circularDoubleLL ::addatBegin()
+void circularDoubleLL::addatBegin()
 {
     node = new circularDoubleLL;
     cout << "\nEnter the name : ";
@@ -37,7 +36,6 @@ void circularDoubleLL ::addatBegin()
         head->next = head;
         head->previous = head;
     }
-
     else
     {
         node->next = head;
@@ -47,7 +45,7 @@ void circularDoubleLL ::addatBegin()
         head = node;
     }
 }
-void circularDoubleLL ::addatLast()
+void circularDoubleLL::addatLast()
 {
     node = new circularDoubleLL;
     cout << "\nEnter the name : ";
@@ -60,7 +58,6 @@ void circularDoubleLL ::addatLast()
         head->previous = head;
         tail = head;
     }
-
     else
     {
         node->next = head;
@@ -70,13 +67,12 @@ void circularDoubleLL ::addatLast()
         tail = node;
     }
 }
-void circularDoubleLL ::delatLast()
+void circularDoubleLL::delatLast()
 {
     if (head == NULL)
     {
         cout << "\nlinked List is empty.";
     }
-
     else
     {
         if (head == tail)
@@ -85,7 +81,6 @@ void circularDoubleLL ::delatLast()
             head = NULL;
             tail = NULL;
         }
-
         else
         {
             temp = tail->previous;
@@ -98,13 +93,12 @@ void circularDoubleLL ::delatLast()
         }
     }
 }
-void circularDoubleLL ::delatFirst()
+void circularDoubleLL::delatFirst()
 {
     if (head == NULL)
     {
         cout << "\nlinked List is empty.";
     }
-
     else
     {
         if (head == tail)
@@ -113,7 +107,6 @@ void circularDoubleLL ::delatFirst()
             head = NULL;
             tail = NULL;
         }
-
         else
         {
             temp = head->next;
@@ -126,7 +119,7 @@ void circularDoubleLL ::delatFirst()
         }
     }
 }
-int circularDoubleLL ::count()
+int circularDoubleLL::count()
 {
     int c = 1;
     if (head == NULL)
@@ -145,7 +138,7 @@ int circularDoubleLL ::count()
         return c;
     }
 }
-void circularDoubleLL ::display()
+void circularDoubleLL::display()
 {
     if (head == NULL)
         cout << "\nList is empty.";
@@ -160,7 +153,7 @@ void circularDoubleLL ::display()
         cout << temp->name;
     }
 }
-void circularDoubleLL ::addatPosition()
+void circularDoubleLL::addatPosition()
 {
     if (head == NULL)
     {
@@ -203,13 +196,12 @@ void circularDoubleLL ::addatPosition()
         }
     }
 }
-void circularDoubleLL ::delatPosition()
+void circularDoubleLL::delatPosition()
 {
     if (head == NULL)
     {
         cout << "\nlinked List is empty.";
     }
-
     else
     {
         int pos;
