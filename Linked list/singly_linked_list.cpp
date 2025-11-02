@@ -270,291 +270,467 @@ int main()
 }
 */
 
-#include <iostream>
+// #include <iostream>
+// using namespace std;
+
+// class linkList
+// {
+// private:
+//     int data;
+//     linkList *next;
+
+// public:
+//     linkList()
+//     {
+//         next = NULL;
+//     }
+
+//     void Sorting();
+//     void addatBegin();
+//     void addatLast();
+//     void delatLast();
+//     void delatFirst();
+//     int count();
+//     void display();
+//     void addatPosition();
+//     void delatPosition();
+// } *head, *tail, *temp, *node, *temp2;
+
+// void linkList::Sorting()
+// {
+//     temp = head;
+//     while (temp != NULL)
+//     {
+//         temp2 = temp->next;
+//         if (temp->data > temp2->data)
+//         {
+//             swap(temp->data, temp2->data);
+//         }
+//         temp = temp->next;
+//     }
+// }
+
+// void linkList::addatBegin()
+// {
+//     node = new linkList;
+//     cout << "\nEnter characters : ";
+//     cin >> node->data;
+
+//     if (head == NULL)
+//     {
+//         head = node;
+//         tail = node;
+//         head->next = NULL;
+//     }
+//     else
+//     {
+//         node->next = head;
+//         head = node;
+//     }
+// }
+
+// void linkList::addatLast()
+// {
+//     node = new linkList;
+//     cout << "\nEnter characters : ";
+//     cin >> node->data;
+
+//     if (head == NULL)
+//     {
+//         head = node;
+//         tail = node;
+//     }
+//     else
+//     {
+//         tail->next = node;
+//         tail = node;
+//     }
+// }
+
+// int linkList::count()
+// {
+//     if (head == NULL)
+//         return 0;
+
+//     int c = 1;
+//     temp = head;
+//     while (temp->next != head)
+//     {
+//         c++;
+//         temp = temp->next;
+//     }
+//     return c;
+// }
+
+// void linkList::addatPosition()
+// {
+//     int pos, Count = count();
+//     cout << "\nEnter Position to insert on : ";
+//     cin >> pos;
+
+//     if (pos == 1)
+//     {
+//         addatBegin();
+//     }
+//     else if (pos == Count + 1)
+//     {
+//         addatLast();
+//     }
+//     else if (pos <= 0 || pos > Count + 1)
+//     {
+//         cout << "\nInvalid position";
+//     }
+//     else
+//     {
+//         node = new linkList;
+//         cout << "\nEnter characters : ";
+//         cin >> node->data;
+
+//         int c = 1;
+//         temp = head;
+//         while (c < pos - 1)
+//         {
+//             temp = temp->next;
+//             c++;
+//         }
+
+//         node->next = temp->next;
+//         temp->next = node;
+//     }
+// }
+
+// void linkList::delatPosition()
+// {
+//     int pos, Count = count();
+//     cout << "\nEnter position to delete from : ";
+//     cin >> pos;
+
+//     if (head == NULL)
+//     {
+//         cout << "\nList is empty.";
+//     }
+//     else if (pos == 1)
+//     {
+//         delatFirst();
+//     }
+//     else if (pos >= Count)
+//     {
+//         delatLast();
+//     }
+//     else if (pos <= 0 || pos > Count)
+//     {
+//         cout << "\nInvalid position.";
+//     }
+//     else
+//     {
+//         int C = 1;
+//         temp = head;
+//         while (C < pos - 1)
+//         {
+//             temp = temp->next;
+//             C++;
+//         }
+//         temp2 = temp->next;
+//         temp->next = temp2->next;
+//         delete temp2;
+//     }
+// }
+
+// void linkList::delatLast()
+// {
+//     if (head == NULL)
+//     {
+//         cout << "\nList is empty";
+//     }
+//     else if (head->next == NULL)
+//     {
+//         delete head;
+//         head = NULL;
+//         tail = NULL;
+//     }
+//     else
+//     {
+//         temp = head;
+//         while (temp->next != NULL)
+//         {
+//             temp = temp->next;
+//         }
+
+//         temp->next = head;
+//         delete tail;
+//         tail = temp;
+//     }
+// }
+
+// void linkList::delatFirst()
+// {
+//     if (head == NULL)
+//     {
+//         cout << "\nList is empty";
+//     }
+//     else if (head->next == NULL)
+//     {
+//         delete head;
+//         head = NULL;
+//         tail = NULL;
+//     }
+//     else
+//     {
+//         temp = head;
+//         head = head->next;
+//         tail->next = head;
+//         delete temp;
+//     }
+// }
+
+// void linkList::display()
+// {
+//     if (head == NULL)
+//     {
+//         cout << "\nList is empty.";
+//         return;
+//     }
+
+//     temp = head;
+//     do
+//     {
+//         cout << temp->data << " ";
+//         temp = temp->next;
+//     } while (temp != head);
+
+//     cout << "\n tail -> next = " << tail->next->data;
+//     cout << "\n tail -> data = " << tail->data;
+//     cout << "\n head -> next = " << head->next->data;
+// }
+
+// int main()
+// {
+//     int ch;
+//     linkList obj; // only to call methods, actual nodes are managed via head/tail
+//     while (1)
+//     {
+//         cout << "\n===== Circular Singly Linked List Menu =====\n";
+//         cout << "1. Insert at beginning\n";
+//         cout << "2. Insert at last\n";
+//         cout << "3. Insert at position\n";
+//         cout << "4. Delete at beginning\n";
+//         cout << "5. Delete at last\n";
+//         cout << "6. Delete at position\n";
+//         cout << "7. Count nodes\n";
+//         cout << "8. Display list\n";
+//         cout << "9. Exit\n";
+//         cout << "============================\n";
+
+//         cout << "Enter your choice: ";
+//         cin >> ch;
+
+//         switch (ch)
+//         {
+//         case 1:
+//             obj.addatBegin();
+//             break;
+//         case 2:
+//             obj.addatLast();
+//             break;
+//         case 3:
+//             obj.addatPosition();
+//             break;
+//         case 4:
+//             obj.delatFirst();
+//             break;
+//         case 5:
+//             obj.delatLast();
+//             break;
+//         case 6:
+//             obj.delatPosition();
+//             break;
+//         case 7:
+//             cout << "\nTotal number of nodes: " << obj.count();
+//             break;
+//         case 8:
+//             obj.display();
+//             break;
+//         case 9:
+//             exit(0);
+//         default:
+//             cout << "\nInvalid option. Try again.\n";
+//         }
+//     }
+//     return 0;
+// }
+
+// all this code above is of circular single LL
+
+// this code below is of normal single LL
+
+#include <bits/stdc++.h>
 using namespace std;
 
-class linkList
+struct node
 {
-private:
     int data;
-    linkList *next;
+    node *next;
+} *temp, *head, *tail, *temp2, *block;
 
-public:
-    linkList()
-    {
-        next = NULL;
-    }
-
-    void Sorting();
-    void addatBegin();
-    void addatLast();
-    void delatLast();
-    void delatFirst();
-    int count();
-    void display();
-    void addatPosition();
-    void delatPosition();
-} *head, *tail, *temp, *node, *temp2;
-
-void linkList::Sorting()
+void addF()
 {
-    temp = head;
-    while (temp != NULL)
-    {
-        temp2 = temp->next;
-        if (temp->data > temp2->data)
-        {
-            swap(temp->data, temp2->data);
-        }
-        temp = temp->next;
-    }
-}
+    block = (node *)malloc(sizeof(node));
+    // user input
 
-void linkList::addatBegin()
-{
-    node = new linkList;
-    cout << "\nEnter characters : ";
-    cin >> node->data;
+    block->next = NULL;
 
     if (head == NULL)
     {
-        head = node;
-        tail = node;
-        head->next = NULL;
+        head = block;
+        tail = block;
     }
     else
     {
-        node->next = head;
-        head = node;
+        block->next = head;
+        head = block;
     }
 }
 
-void linkList::addatLast()
+void addL()
 {
-    node = new linkList;
-    cout << "\nEnter characters : ";
-    cin >> node->data;
-
+    block = (node *)malloc(sizeof(node));
+    // user input
+    block->next = NULL;
     if (head == NULL)
     {
-        head = node;
-        tail = node;
+        head = block;
+        tail = block;
     }
     else
     {
-        tail->next = node;
-        tail = node;
+        tail->next = block;
+        tail = block;
     }
 }
 
-int linkList::count()
+int count()
 {
     if (head == NULL)
         return 0;
 
-    int c = 1;
     temp = head;
-    while (temp->next != head)
+    int c = 0;
+    while (temp != NULL)
     {
         c++;
         temp = temp->next;
     }
+
     return c;
 }
 
-void linkList::addatPosition()
+void addM()
 {
-    int pos, Count = count();
-    cout << "\nEnter Position to insert on : ";
-    cin >> pos;
+    int pos;
 
-    if (pos == 1)
-    {
-        addatBegin();
-    }
-    else if (pos == Count + 1)
-    {
-        addatLast();
-    }
-    else if (pos <= 0 || pos > Count + 1)
-    {
-        cout << "\nInvalid position";
-    }
+    if (pos > count() + 1 || pos <= 0)
+        cout << "enter valid position";
+
+    else if (pos == 1)
+        addF();
+
+    else if (pos == count() + 1)
+        addL();
+
     else
     {
-        node = new linkList;
-        cout << "\nEnter characters : ";
-        cin >> node->data;
+        block = (node *)malloc(sizeof(node));
 
-        int c = 1;
         temp = head;
+        int c = 1;
+
+        // making loop to go the desired position
         while (c < pos - 1)
         {
-            temp = temp->next;
             c++;
-        }
-
-        node->next = temp->next;
-        temp->next = node;
-    }
-}
-
-void linkList::delatPosition()
-{
-    int pos, Count = count();
-    cout << "\nEnter position to delete from : ";
-    cin >> pos;
-
-    if (head == NULL)
-    {
-        cout << "\nList is empty.";
-    }
-    else if (pos == 1)
-    {
-        delatFirst();
-    }
-    else if (pos >= Count)
-    {
-        delatLast();
-    }
-    else if (pos <= 0 || pos > Count)
-    {
-        cout << "\nInvalid position.";
-    }
-    else
-    {
-        int C = 1;
-        temp = head;
-        while (C < pos - 1)
-        {
-            temp = temp->next;
-            C++;
-        }
-        temp2 = temp->next;
-        temp->next = temp2->next;
-        delete temp2;
-    }
-}
-
-void linkList::delatLast()
-{
-    if (head == NULL)
-    {
-        cout << "\nList is empty";
-    }
-    else if (head->next == NULL)
-    {
-        delete head;
-        head = NULL;
-        tail = NULL;
-    }
-    else
-    {
-        temp = head;
-        while (temp->next != NULL)
-        {
             temp = temp->next;
         }
 
-        temp->next = head;
-        delete tail;
-        tail = temp;
+        // setting connections
+        block->next = temp->next;
+        temp->next = block;
     }
 }
 
-void linkList::delatFirst()
+void delF()
 {
     if (head == NULL)
     {
-        cout << "\nList is empty";
+        cout << "Not enough elements to delete";
     }
-    else if (head->next == NULL)
-    {
-        delete head;
-        head = NULL;
-        tail = NULL;
-    }
+
     else
     {
         temp = head;
         head = head->next;
-        tail->next = head;
-        delete temp;
+        free(temp);
     }
 }
 
-void linkList::display()
+void delL()
 {
     if (head == NULL)
     {
-        cout << "\nList is empty.";
-        return;
+        cout << "Not enough elements to delete";
     }
-
-    temp = head;
-    do
+    else
     {
-        cout << temp->data << " ";
-        temp = temp->next;
-    } while (temp != head);
+        temp = head;
 
-    cout << "\n tail -> next = " << tail->next->data;
-    cout << "\n tail -> data = " << tail->data;
-    cout << "\n head -> next = " << head->next->data;
+        if (head == tail)
+        {
+            free(head);
+            head = NULL;
+            tail = NULL;
+        }
+        while (temp->next != tail)
+        {
+            temp = temp->next;
+        }
+        tail = temp;
+        free(temp->next);
+        temp->next = NULL;
+    }
+}
+
+void delM()
+{
+    int pos;
+
+    if (pos < 1 || pos > count() + 1)
+        cout << "Invalid position";
+
+    else if (pos == 1)
+        delF();
+    else if (pos == count() + 1)
+        delL();
+
+    else
+    {
+        // to get the starting pointer
+        int c = 1;
+        temp = head;
+
+        while (c < pos)
+        {
+            c++;
+            temp = temp->next;
+        }
+
+        // making the links so yhat the middle element can get free
+        temp2 = temp->next;
+        temp->next = temp2->next;
+        temp2->next = NULL;
+        free(temp2);
+    }
 }
 
 int main()
 {
-    int ch;
-    linkList obj; // only to call methods, actual nodes are managed via head/tail
-    while (1)
-    {
-        cout << "\n===== Circular Singly Linked List Menu =====\n";
-        cout << "1. Insert at beginning\n";
-        cout << "2. Insert at last\n";
-        cout << "3. Insert at position\n";
-        cout << "4. Delete at beginning\n";
-        cout << "5. Delete at last\n";
-        cout << "6. Delete at position\n";
-        cout << "7. Count nodes\n";
-        cout << "8. Display list\n";
-        cout << "9. Exit\n";
-        cout << "============================\n";
-
-        cout << "Enter your choice: ";
-        cin >> ch;
-
-        switch (ch)
-        {
-        case 1:
-            obj.addatBegin();
-            break;
-        case 2:
-            obj.addatLast();
-            break;
-        case 3:
-            obj.addatPosition();
-            break;
-        case 4:
-            obj.delatFirst();
-            break;
-        case 5:
-            obj.delatLast();
-            break;
-        case 6:
-            obj.delatPosition();
-            break;
-        case 7:
-            cout << "\nTotal number of nodes: " << obj.count();
-            break;
-        case 8:
-            obj.display();
-            break;
-        case 9:
-            exit(0);
-        default:
-            cout << "\nInvalid option. Try again.\n";
-        }
-    }
     return 0;
 }
