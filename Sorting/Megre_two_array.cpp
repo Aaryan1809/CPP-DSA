@@ -20,24 +20,10 @@ vector<int> merge(vector<int> &a, vector<int> &b)
 {
     int asize = a.size();
     int bsize = b.size();
-    vector<int> c(asize + bsize);
-
-    // cout << "\nArray before sorting : \n";
-    // for (int x = 0; x < asize; x++)
-    // {
-    //     cout << a[x] << " ";
-    // }
-    // cout << endl;
-    // for (int x = 0; x < bsize; x++)
-    // {
-    //     cout << b[x] << " ";
-    // }
-
-    int i = 0;
-    int j = 0;
-    int k = 0;
-
-    while (i < asize && j < bsize)
+    vector<int> c;
+    int csize = asize + bsize;
+    int i = 0, j = 0, k = 0;
+    while (i < asize || j < bsize)
     {
         if (a[i] < b[j])
         {
@@ -51,12 +37,13 @@ vector<int> merge(vector<int> &a, vector<int> &b)
             k++;
             j++;
         }
+
         else
         {
-            c[k] = b[j];
-            k++;
+            c[k] = a[i];
             j++;
             i++;
+            k++;
         }
     }
 
@@ -73,15 +60,6 @@ vector<int> merge(vector<int> &a, vector<int> &b)
         k++;
         j++;
     }
-
-    cout << "\nEnd of array";
-    cout << "\nArray after sorting " << endl;
-    for (int x = 0; x <= k - 1; x++)
-    {
-        cout << c[x] << " ";
-    }
-    cout << "\ntotal elements " << k;
-    return c;
 }
 
 int bs(vector<int> &arr, int tg)
@@ -124,6 +102,110 @@ int main()
     vector<int> mergearr = merge(arr, arr2);
     cout << endl;
     cout << bs(mergearr, tg);
+
+    return 0;
+}
+
+// code for int array
+#include <iostream>
+using namespace std;
+
+// Bubble Sort for integer array
+void bubbleSort(int arr[], int n)
+{
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = 0; j < n - i - 1; j++)
+        {
+            if (arr[j] > arr[j + 1])
+            {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+// Merge two sorted arrays into one sorted array
+void mergeArrays(int a[], int asize, int b[], int bsize, int c[], int &csize)
+{
+    int i = 0, j = 0, k = 0;
+    while (i < asize && j < bsize)
+    {
+        if (a[i] < b[j])
+        {
+            c[k++] = a[i++];
+        }
+        else if (a[i] > b[j])
+        {
+            c[k++] = b[j++];
+        }
+        else
+        {
+            c[k++] = a[i++];
+            j++; // skip duplicate
+        }
+    }
+
+    // Copy remaining elements
+    while (i < asize)
+        c[k++] = a[i++];
+    while (j < bsize)
+        c[k++] = b[j++];
+
+    csize = k; // final merged array size
+}
+
+// Binary Search
+int binarySearch(int arr[], int n, int target)
+{
+    int start = 0, end = n - 1;
+    while (start <= end)
+    {
+        int mid = (start + end) / 2;
+        if (target == arr[mid])
+            return mid;
+        else if (target < arr[mid])
+            end = mid - 1;
+        else
+            start = mid + 1;
+    }
+    return -1;
+}
+
+int main()
+{
+    int arr1[] = {123, 1245, 21324, 211, 2, 42, 21, 5, 26, 85, 58, 457, 658, 45, 568, 9, -13, 124, -125, -236, 2463, 235235};
+    int arr2[] = {13, 145, 134, 21, 2, 2, 1, 5, 6, 5, 8, 47, 68, 58, 9, -3, 14, -15, -26, 246, -23525};
+
+    int size1 = sizeof(arr1) / sizeof(arr1[0]);
+    int size2 = sizeof(arr2) / sizeof(arr2[0]);
+
+    // Sort both arrays
+    bubbleSort(arr1, size1);
+    bubbleSort(arr2, size2);
+
+    // Merge arrays
+    int merged[1000];
+    int mergedSize = 0;
+    mergeArrays(arr1, size1, arr2, size2, merged, mergedSize);
+
+    // Target value to search
+    int target = 246;
+    int index = binarySearch(merged, mergedSize, target);
+
+    // Print merged array
+    cout << "Merged Sorted Array:\n";
+    for (int i = 0; i < mergedSize; i++)
+        cout << merged[i] << " ";
+    cout << "\n";
+
+    // Print search result
+    if (index != -1)
+        cout << "Target " << target << " found at index " << index << endl;
+    else
+        cout << "Target " << target << " not found." << endl;
 
     return 0;
 }
